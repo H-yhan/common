@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tuya.penglai.core.repository.DemandRepository">
+    <resultMap id="BaseResultMapper" type="com.tuya.penglai.core.entity.project.DemandDO">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="branchName" column="branch_name"/>
+        <result property="projectId" column="project_id"/>
+        <result property="managerUserId" column="manager_user_id"/>
+        <result property="groupUserIds" column="group_user_ids"/>
+        <result property="des" column="des"/>
+        <result property="publishTimePre" column="publish_time_pre"/>
+        <result property="status" column="status"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+    <sql id="baseColumn">
+        id,name,branch_name,project_id,manager_user_id,group_user_ids,des,publish_time_pre,status
+    </sql>
+    <sql id="set">
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="branchName != null">
+            branch_name = #{branchName},
+        </if>
+        <if test="projectId != null">
+            project_id  = #{projectId},
+        </if>
+        <if test="managerUserId != null">
+            manager_user_id = #{managerUserId},
+        </if>
+        <if test="groupUserIds != null">
+            group_user_ids = #{groupUserIds},
+        </if>
+        <if test="des != null">
+            `des` = #{des},
+        </if>
+        <if test="publishTimePre != null">
+            publish_time_pre = #{publishTimePre},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="gmtCreate != null">
+            gmt_create = #{gmtCreate},
+        </if>
+        <if test="gmtModified != null">
+            gmt_modified = #{gmtModified},
+        </if>
+    </sql>
+    <insert id="insert" parameterType="com.tuya.penglai.core.entity.project.DemandDO">
+        insert penglai_demand
+        <set>
+            <include refid="set"/>
+        </set>
+    </insert>
+    <select id="findOne" parameterType="java.lang.Integer" resultMap="BaseResultMapper">
+        select <include refid="baseColumn"/>
+          from penglai_demand
+        WHERE id = #{id}
+    </select>
+</mapper>
